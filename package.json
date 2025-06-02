@@ -1,0 +1,9 @@
+{
+  "name": "com.coldwind.serein",
+  "version": "0.1.0",
+  "unity": "6000.0",
+  "displayName": "Serein",
+  "license": "MIT",
+  "author": "AntrelL",
+  "description": "It is a framework that provides tools for quickly and easily creating games with a good architecture in Unity."
+}
