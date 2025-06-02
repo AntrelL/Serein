@@ -1,11 +1,13 @@
+using Serein.Reflection;
 using System;
 
 namespace Serein
 {
     public static class NumberExtensions
     {
-        private static readonly Contract s_rangeLimitsContract =
-            new("The max number of the range must be greater than the min");
+        private static readonly Contract s_rangeLimitsContract = new(
+                text: "The max number of the range must be greater than the min", 
+                outputConfig: new(Package.ModuleName.Misc, nameof(NumberExtensions)));
 
         public static bool IsInRange(this int number, int min, int max) =>
             IsInRange<int>(number, min, max);
