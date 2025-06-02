@@ -1,6 +1,6 @@
 ﻿namespace Serein
 {
-    public enum ContractSeverity
+    public enum MessageSeverity
     {
         Info,
         Warning,
