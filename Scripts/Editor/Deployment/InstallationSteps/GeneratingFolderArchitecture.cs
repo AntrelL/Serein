@@ -21,19 +21,13 @@ namespace Serein.Deployment.Editor
         {
             foreach (var folderStructureName in _folderStructureNames)
             {
-                if (GenerateFolderStructure(folderStructureName) == false)
+                string folderStructurePath = CreateFolderStructurePath(folderStructureName);
+
+                if (_folderArchitecture.Generate(folderStructurePath) == false)
                     return false;
             }
 
             return true;
-        }
-
-        private bool GenerateFolderStructure(string name)
-        {
-            string folderStructurePath = CreateFolderStructurePath(name);
-            _folderArchitecture.Generate(folderStructurePath, out bool isSuccessful);
-
-            return isSuccessful;
         }
 
         private string CreateFolderStructurePath(string name) =>

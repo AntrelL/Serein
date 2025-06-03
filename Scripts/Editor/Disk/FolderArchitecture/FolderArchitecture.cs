@@ -12,7 +12,11 @@ namespace Serein.Disk.Editor
         private const string GitKeepFilesDeletedMessage = 
             Metadata.GitKeepFileName + " files deleted successfully";
 
-        private const string FoldersGenerationError = "Error generating folder structure";
+        private const string FoldersGenerationError = 
+            "Error generating folder structure";
+
+        private const string GitKeepFileDeletionError = 
+            "Error deleting " + Metadata.GitKeepFileName + " files";
 
         private readonly ConsoleOutputConfig _consoleOutputConfig;
 
@@ -24,25 +28,19 @@ namespace Serein.Disk.Editor
             _consoleOutputConfig = consoleOutputConfig;
         }
 
-        public void Generate(
-            string pathToFolderStructure, out bool isSuccessful, bool createGitKeepFiles = true)
+        public bool Generate(string pathToFolderStructure, bool createGitKeepFiles = true)
         {
             var folderStructureResource = Resource<FolderStructure>.Load(pathToFolderStructure);
-            isSuccessful = folderStructureResource is not null;
 
-            if (isSuccessful == false)
-                return;
-
-            Generate(folderStructureResource.Asset, out isSuccessful, createGitKeepFiles);
+            return folderStructureResource is not null
+                ? Generate(folderStructureResource.Asset, createGitKeepFiles) 
+                : false;
         }
 
-        public void Generate(
-            FolderStructure folderStructure, out bool isSuccessful, bool createGitKeepFiles = true)
+        public bool Generate(FolderStructure folderStructure, bool createGitKeepFiles = true)
         {
             try
             {
-                isSuccessful = true;
-
                 foreach (string folder in folderStructure.Folders)
                 {
                     if (Directory.Exists(folder) == false)
@@ -54,24 +52,36 @@ namespace Serein.Disk.Editor
 
                 AssetDatabase.Refresh();
                 Console.Log(folderStructure.name + FoldersGeneratedMessagePart, _consoleOutputConfig);
+
+                return true;
             }
             catch
             {
                 Console.LogError(FoldersGenerationError, _consoleOutputConfig);
-                isSuccessful = false;
-            }  
+                return false;
+            }
         }
 
-        public void DeleteGitkeepFiles(string rootFolderName)
+        public bool DeleteGitkeepFiles(string rootFolderName)
         {
-            string[] gitkeepFiles = Directory.GetFiles(
-                rootFolderName, Metadata.GitKeepFileName, SearchOption.AllDirectories);
+            try
+            {
+                string[] gitkeepFiles = Directory.GetFiles(
+                    rootFolderName, Metadata.GitKeepFileName, SearchOption.AllDirectories);
 
-            foreach (string gitkeepFile in gitkeepFiles)
-                File.Delete(gitkeepFile);
+                foreach (string gitkeepFile in gitkeepFiles)
+                    File.Delete(gitkeepFile);
 
-            AssetDatabase.Refresh();
-            Console.Log(GitKeepFilesDeletedMessage, _consoleOutputConfig);
+                AssetDatabase.Refresh();
+                Console.Log(GitKeepFilesDeletedMessage, _consoleOutputConfig);
+
+                return true;
+            }
+            catch
+            {
+                Console.LogError(GitKeepFileDeletionError, _consoleOutputConfig);
+                return false;
+            }
         }
     }
 }
