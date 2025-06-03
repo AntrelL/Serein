@@ -5,9 +5,9 @@ namespace Serein
     public struct ConsoleOutputConfig
     {
         public ConsoleOutputConfig(string moduleName = null, Type type = null) : 
-            this(moduleName, type?.Name) { }
+            this(moduleName, type?.GetCorrectName()) { }
 
-        public ConsoleOutputConfig(string moduleName = null, string typeName = null)
+        public ConsoleOutputConfig(string moduleName, string typeName)
         {
             ModuleName = moduleName;
             TypeName = typeName;

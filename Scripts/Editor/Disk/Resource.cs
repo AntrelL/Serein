@@ -7,23 +7,23 @@ namespace Serein.Disk.Editor
     public class Resource<T> where T : UnityEngine.Object
     {
         private static ConsoleOutputConfig s_consoleOutputConfig = 
-            new(Package.ModuleName.Disk, typeof(Resource<T>).GetCorrectGenericName());
+            new(Package.ModuleName.Disk, typeof(Resource<T>));
 
         private static Contract s_creationContract = new(
             text: "Error creating asset, asset with this name already exists, path: ",
             outputConfig: s_consoleOutputConfig);
 
         private static Contract s_loadingContract = new(
-            text: "Failed to load asset at path ", 
+            text: "Failed to load asset at path: ", 
             outputConfig: s_consoleOutputConfig);
-
-        private T _asset;
 
         private Resource(T asset, string path)
         {
-            _asset = asset;
+            Asset = asset;
             Path = path;
         }
+
+        public T Asset { get; private set; }
 
         public string Path { get; private set; }
 
@@ -55,17 +55,17 @@ namespace Serein.Disk.Editor
         {
             T asset = AssetDatabase.LoadAssetAtPath<T>(path);
 
-            bool isSuccess = asset is not null;
-            resource = isSuccess ? new(asset, path) : null;
+            bool isSuccessful = asset is not null;
+            resource = isSuccessful ? new(asset, path) : null;
 
-            return isSuccess;
+            return isSuccessful;
         }
 
         public static bool Exists(string path) => TryLoad(path, out _);
 
         public void Edit(Action<T> changer, bool autoSave = true)
         {
-            changer.Invoke(_asset);
+            changer.Invoke(Asset);
 
             if (autoSave)
                 Save();
@@ -73,7 +73,7 @@ namespace Serein.Disk.Editor
 
         public void Save()
         {
-            EditorUtility.SetDirty(_asset);
+            EditorUtility.SetDirty(Asset);
             AssetDatabase.SaveAssets();
         }
     }

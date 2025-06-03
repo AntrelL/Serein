@@ -5,7 +5,7 @@ namespace Serein
 {
     public static class TypeExtensions
     {
-        public static string GetCorrectGenericName(this Type type)
+        public static string GetCorrectName(this Type type)
         {
             if (type.IsGenericType == false)
                 return type.Name;
