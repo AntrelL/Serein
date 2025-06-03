@@ -1,4 +1,5 @@
 using Serein.Deployment.Editor;
+using Serein.Disk.Editor;
 using Serein.Reflection;
 using UnityEditor;
 
@@ -9,8 +10,8 @@ namespace Serein.GUI.Editor
         private const string DeploymentMenuPath =
             Package.Name + "/" + Package.ModuleName.Deployment + "/";
 
-        private static FolderArchitecture s_folderArchitecture = new();
         private static Installation s_installation = new();
+        private static FolderArchitecture s_folderArchitecture = new();
 
         [MenuItem(DeploymentMenuPath + nameof(Install))]
         private static void Install()

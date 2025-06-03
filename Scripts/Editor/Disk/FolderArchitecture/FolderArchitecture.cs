@@ -1,9 +1,8 @@
-using Serein.Disk.Editor;
 using Serein.Reflection;
 using System.IO;
 using UnityEditor;
 
-namespace Serein.Deployment.Editor
+namespace Serein.Disk.Editor
 {
     public class FolderArchitecture
     {
@@ -15,8 +14,15 @@ namespace Serein.Deployment.Editor
 
         private const string FoldersGenerationError = "Error generating folder structure";
 
-        private static readonly ConsoleOutputConfig s_consoleOutputConfig = 
-            new(Package.ModuleName.Deployment);
+        private readonly ConsoleOutputConfig _consoleOutputConfig;
+
+        public FolderArchitecture() : 
+            this(new(Package.ModuleName.Disk, typeof(FolderArchitecture))) { }
+
+        public FolderArchitecture(ConsoleOutputConfig consoleOutputConfig)
+        {
+            _consoleOutputConfig = consoleOutputConfig;
+        }
 
         public void Generate(
             string pathToFolderStructure, out bool isSuccessful, bool createGitKeepFiles = true)
@@ -47,11 +53,11 @@ namespace Serein.Deployment.Editor
                 }
 
                 AssetDatabase.Refresh();
-                Console.Log(folderStructure.name + FoldersGeneratedMessagePart, s_consoleOutputConfig);
+                Console.Log(folderStructure.name + FoldersGeneratedMessagePart, _consoleOutputConfig);
             }
             catch
             {
-                Console.LogError(FoldersGenerationError, s_consoleOutputConfig);
+                Console.LogError(FoldersGenerationError, _consoleOutputConfig);
                 isSuccessful = false;
             }  
         }
@@ -65,7 +71,7 @@ namespace Serein.Deployment.Editor
                 File.Delete(gitkeepFile);
 
             AssetDatabase.Refresh();
-            Console.Log(GitKeepFilesDeletedMessage, s_consoleOutputConfig);
+            Console.Log(GitKeepFilesDeletedMessage, _consoleOutputConfig);
         }
     }
 }

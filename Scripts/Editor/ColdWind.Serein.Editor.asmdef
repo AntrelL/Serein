@@ -2,7 +2,8 @@
     "name": "ColdWind.Serein.Editor",
     "rootNamespace": "Serein.Editor",
     "references": [
-        "GUID:28c71111f963a664e903902149f36a8f"
+        "GUID:28c71111f963a664e903902149f36a8f",
+        "GUID:69448af7b92c7f342b298e06a37122aa"
     ],
     "includePlatforms": [
         "Editor"

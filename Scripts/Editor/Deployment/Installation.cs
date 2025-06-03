@@ -20,7 +20,8 @@ namespace Serein.Deployment.Editor
 
         private List<InstallationStep> _steps = new()
         {
-            new GeneratingFolderArchitecture()
+            new GeneratingFolderArchitecture(),
+            new AddressablesInitialization()
         };
 
         public static bool IsCompleted => AssetDatabase.IsValidFolder(Package.PathToDynamicDataFolder);

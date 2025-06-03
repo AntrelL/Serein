@@ -4,8 +4,11 @@ namespace Serein.Reflection
     {
         public const string Name = "Serein";
         public const string TechnicalName = "com.coldwind.serein";
+
         public const string Path = "Packages/" + TechnicalName;
         public const string PathToDynamicDataFolder = Metadata.AssetRootFolderName + "/" + Name + "Data";
+
+        public const string SystemAddressablesGroupName = "System";
 
         public static class ModuleName
         {

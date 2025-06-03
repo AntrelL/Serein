@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Serein.Deployment.Editor
+namespace Serein.Disk.Editor
 {
     [CreateAssetMenu(fileName = "FolderStructure", menuName = "Scriptable Objects/Folder Structure")]
     public class FolderStructure : ScriptableObject

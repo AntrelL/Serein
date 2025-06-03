@@ -1,3 +1,4 @@
+using Serein.Disk.Editor;
 using Serein.Reflection;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace Serein.Deployment.Editor
             "UserData"
         };
 
-        private FolderArchitecture _folderArchitecture = new();
+        private FolderArchitecture _folderArchitecture = new(ConsoleOutputConfig);
 
         public override bool Install()
         {
