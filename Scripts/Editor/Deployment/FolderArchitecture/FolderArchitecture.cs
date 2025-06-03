@@ -13,10 +13,12 @@ namespace Serein.Deployment.Editor
         private const string GitKeepFilesDeletedMessage = 
             Metadata.GitKeepFileName + " files deleted successfully";
 
+        private const string FoldersGenerationError = "Error generating folder structure";
+
         private static readonly ConsoleOutputConfig s_consoleOutputConfig = 
             new(Package.ModuleName.Deployment);
 
-        public static void Generate(
+        public void Generate(
             string pathToFolderStructure, out bool isSuccessful, bool createGitKeepFiles = true)
         {
             var folderStructureResource = Resource<FolderStructure>.Load(pathToFolderStructure);
@@ -28,25 +30,33 @@ namespace Serein.Deployment.Editor
             Generate(folderStructureResource.Asset, out isSuccessful, createGitKeepFiles);
         }
 
-        public static void Generate(
+        public void Generate(
             FolderStructure folderStructure, out bool isSuccessful, bool createGitKeepFiles = true)
         {
-            foreach (string folder in folderStructure.Folders)
+            try
             {
-                if (Directory.Exists(folder) == false)
-                    Directory.CreateDirectory(folder);
+                isSuccessful = true;
 
-                if (createGitKeepFiles)
-                    File.WriteAllText(Path.Combine(folder, Metadata.GitKeepFileName), string.Empty);
+                foreach (string folder in folderStructure.Folders)
+                {
+                    if (Directory.Exists(folder) == false)
+                        Directory.CreateDirectory(folder);
+
+                    if (createGitKeepFiles)
+                        File.WriteAllText(Path.Combine(folder, Metadata.GitKeepFileName), string.Empty);
+                }
+
+                AssetDatabase.Refresh();
+                Console.Log(folderStructure.name + FoldersGeneratedMessagePart, s_consoleOutputConfig);
             }
-
-            isSuccessful = true;
-            AssetDatabase.Refresh();
-
-            Console.Log(folderStructure.name + FoldersGeneratedMessagePart, s_consoleOutputConfig);
+            catch
+            {
+                Console.LogError(FoldersGenerationError, s_consoleOutputConfig);
+                isSuccessful = false;
+            }  
         }
 
-        public static void DeleteGitkeepFiles(string rootFolderName)
+        public void DeleteGitkeepFiles(string rootFolderName)
         {
             string[] gitkeepFiles = Directory.GetFiles(
                 rootFolderName, Metadata.GitKeepFileName, SearchOption.AllDirectories);

@@ -15,6 +15,7 @@ namespace Serein.Reflection
 
             public const string Deployment = nameof(Deployment);
             public const string Disk = nameof(Disk);
+            public const string GUI = nameof(GUI);
         }
     }
 }
