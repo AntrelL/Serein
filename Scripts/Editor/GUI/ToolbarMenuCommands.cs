@@ -13,13 +13,13 @@ namespace Serein.GUI.Editor
         private static Installation s_installation = new();
         private static FolderArchitecture s_folderArchitecture = new();
 
-        [MenuItem(DeploymentMenuPath + nameof(Install))]
+        [MenuItem(DeploymentMenuPath + nameof(Install), priority = 1)]
         private static void Install()
         {
             s_installation.Start();
         }
 
-        [MenuItem(DeploymentMenuPath + nameof(DeleteGitkeepFiles))]
+        [MenuItem(DeploymentMenuPath + nameof(DeleteGitkeepFiles), priority = 2)]
         private static void DeleteGitkeepFiles()
         {
             s_folderArchitecture.DeleteGitkeepFiles(Metadata.AssetRootFolderName);

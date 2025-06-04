@@ -9,7 +9,7 @@ namespace Serein.Deployment.Editor
     {
         private const string MainSceneCreatedMessage = "Main scene created";
 
-        private static readonly Contract s_creationContract = 
+        private readonly Contract _creationContract = 
             new("Failed to create main scene", outputConfig: ConsoleOutputConfig);
 
         public override bool Install()
@@ -25,7 +25,7 @@ namespace Serein.Deployment.Editor
                 return gameObject;
             });
 
-            if (s_creationContract.CheckViolation(mainScene.Save() == false))
+            if (_creationContract.CheckViolation(mainScene.Save() == false))
                 return false;
 
             Console.Log(MainSceneCreatedMessage, ConsoleOutputConfig);

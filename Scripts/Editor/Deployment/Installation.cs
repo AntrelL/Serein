@@ -12,10 +12,10 @@ namespace Serein.Deployment.Editor
         private static readonly ConsoleOutputConfig s_consoleOutputConfig = 
             new(Package.ModuleName.Deployment, typeof(Installation));
 
-        private static readonly Contract s_installationContract = 
+        private readonly Contract _installationContract = 
             new(Package.Name + " is already installed", MessageSeverity.Info, s_consoleOutputConfig);
 
-        private static readonly Contract s_stepContract =
+        private readonly Contract _stepContract =
             new("Installation failed", outputConfig: s_consoleOutputConfig);
 
         private List<InstallationStep> _steps = new()
@@ -29,14 +29,14 @@ namespace Serein.Deployment.Editor
 
         public void Start()
         {
-            if (s_installationContract.CheckViolation(IsCompleted))
+            if (_installationContract.CheckViolation(IsCompleted))
                 return;
 
             Console.Log(StartMessage, s_consoleOutputConfig);
 
             foreach (var step in _steps)
             {
-                if (s_stepContract.CheckViolation(step.Install() == false))
+                if (_stepContract.CheckViolation(step.Install() == false))
                     return;
             }
 

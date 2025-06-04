@@ -2,7 +2,7 @@
 
 namespace Serein.Reflection
 {
-    public class Metadata
+    public static class Metadata
     {
         public const string AssetRootFolderName = "Assets";
 
