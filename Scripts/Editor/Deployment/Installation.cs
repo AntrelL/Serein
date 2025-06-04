@@ -12,6 +12,8 @@ namespace Serein.Deployment.Editor
         private static readonly ConsoleOutputConfig s_consoleOutputConfig = 
             new(Package.ModuleName.Deployment, typeof(Installation));
 
+        private static Installation s_instance;
+
         private readonly Contract _installationContract = 
             new(Package.Name + " is already installed", MessageSeverity.Info, s_consoleOutputConfig);
 
@@ -24,6 +26,8 @@ namespace Serein.Deployment.Editor
             new AddressablesInitialization(),
             new CreatingMainScene()
         };
+
+        public static Installation Instance => s_instance ??= new();
 
         public bool IsCompleted => AssetDatabase.IsValidFolder(Package.PathToDynamicDataFolder);
 

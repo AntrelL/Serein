@@ -19,7 +19,7 @@ namespace Serein.GUI.Editor
         private const int InstallButtonPriority = 1;
         private const int DeleteGitkeepButtonPriority = InstallButtonPriority + 1;
 
-        private static Installation s_installation = new();
+        private static Installation s_installation = Installation.Instance;
         private static FolderArchitecture s_folderArchitecture = new();
 
         [MenuItem(InstallButtonMenuPath, priority = InstallButtonPriority)]

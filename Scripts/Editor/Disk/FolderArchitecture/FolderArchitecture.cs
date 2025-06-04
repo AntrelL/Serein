@@ -7,10 +7,10 @@ namespace Serein.Disk.Editor
     public class FolderArchitecture
     {
         private const string FoldersGeneratedMessagePart = 
-            " folder structure generated successfully";
+            " folder structure generated";
 
         private const string GitKeepFilesDeletedMessage = 
-            Metadata.GitKeepFileName + " files deleted successfully";
+            Metadata.GitKeepFileName + " files deleted";
 
         private const string FoldersGenerationError = 
             "Error generating folder structure";
