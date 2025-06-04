@@ -1,4 +1,5 @@
 using Serein.Disk.Editor;
+using Serein.Infrastructure;
 using Serein.Reflection;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Serein.Deployment.Editor
 
             mainScene.AddObject((GameObject gameObject) =>
             {
+                gameObject.AddComponent<EntryPoint>();
                 gameObject.name = Package.SystemObjectName;
                 gameObject.isStatic = true;
 

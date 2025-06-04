@@ -17,6 +17,7 @@ namespace Serein.Reflection
 
         public static class ModuleName
         {
+            public const string Infrastructure = nameof(Infrastructure);
             public const string Reflection = nameof(Reflection);
             public const string Debug = nameof(Debug);
             public const string Misc = nameof(Misc);
