@@ -10,16 +10,31 @@ namespace Serein.GUI.Editor
         private const string DeploymentMenuPath =
             Package.Name + "/" + Package.ModuleName.Deployment + "/";
 
+        private const string InstallButtonMenuPath = 
+            DeploymentMenuPath + nameof(Install);
+
+        private const string DeleteGitkeepButtonMenuPath =
+            DeploymentMenuPath + nameof(DeleteGitkeepFiles);
+
+        private const int InstallButtonPriority = 1;
+        private const int DeleteGitkeepButtonPriority = InstallButtonPriority + 1;
+
         private static Installation s_installation = new();
         private static FolderArchitecture s_folderArchitecture = new();
 
-        [MenuItem(DeploymentMenuPath + nameof(Install), priority = 1)]
+        [MenuItem(InstallButtonMenuPath, priority = InstallButtonPriority)]
         private static void Install()
         {
             s_installation.Start();
         }
 
-        [MenuItem(DeploymentMenuPath + nameof(DeleteGitkeepFiles), priority = 2)]
+        [MenuItem(InstallButtonMenuPath, true)]
+        private static bool ValidateInstall()
+        {
+            return s_installation.IsCompleted == false;
+        }
+
+        [MenuItem(DeleteGitkeepButtonMenuPath, priority = DeleteGitkeepButtonPriority)]
         private static void DeleteGitkeepFiles()
         {
             s_folderArchitecture.DeleteGitkeepFiles(Metadata.AssetRootFolderName);

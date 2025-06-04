@@ -25,7 +25,7 @@ namespace Serein.Deployment.Editor
             new CreatingMainScene()
         };
 
-        public static bool IsCompleted => AssetDatabase.IsValidFolder(Package.PathToDynamicDataFolder);
+        public bool IsCompleted => AssetDatabase.IsValidFolder(Package.PathToDynamicDataFolder);
 
         public void Start()
         {
